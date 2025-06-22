@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📚 Book Manager</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #f0f0f0;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .book-info {
+      max-width: 80%;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .edit-btn, .delete-btn {
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📚 Book Manager</h1>
+    <form id="bookForm">
+      <input id="title" placeholder="Book Title" required />
+      <input id="author" placeholder="Author" required />
+      <input id="genre" placeholder="Genre" />
+      <input id="year" placeholder="Published Year" type="number" />
+      <button type="submit">Submit Book</button>
+    </form>
+
+    <ul id="bookList"></ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('bookForm');
+    const list = document.getElementById('bookList');
+
+    let isEditing = false;
+    let editingBookId = null;
+
+    const API_URL = 'http://localhost:5000/api/books';
+
+    const fetchBooks = async () => {
+      const res = await fetch(API_URL);
+      const books = await res.json();
+      list.innerHTML = '';
+      books.forEach(book => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <div class="book-info">
+            <div><strong>${book.title}</strong> by ${book.author} (${book.publishedYear})</div>
+            <div style="font-size: 0.9em; color: #555;">Genre: ${book.genre || 'N/A'}</div>
+          </div>
+          <div class="actions">
+            <button class="edit-btn" onclick="editBook('${book._id}', '${book.title}', '${book.author}', '${book.genre}', ${book.publishedYear})">Edit</button>
+            <button class="delete-btn" onclick="deleteBook('${book._id}')">Delete</button>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    };
+
+    const addBook = async (book) => {
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(book),
+      });
+      fetchBooks();
+    };
+
+    const updateBook = async (id, book) => {
+      await fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(book),
+      });
+      fetchBooks();
+    };
+
+    const deleteBook = async (id) => {
+      await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+      });
+      fetchBooks();
+    };
+
+    const editBook = (id, title, author, genre, year) => {
+      form.title.value = title;
+      form.author.value = author;
+      form.genre.value = genre;
+      form.year.value = year;
+      isEditing = true;
+      editingBookId = id;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const book = {
+        title: form.title.value,
+        author: form.author.value,
+        genre: form.genre.value,
+        publishedYear: Number(form.year.value),
+      };
+
+      if (isEditing) {
+        await updateBook(editingBookId, book);
+        isEditing = false;
+        editingBookId = null;
+      } else {
+        await addBook(book);
+      }
+
+      form.reset();
+    });
+
+    fetchBooks();
+  </script>
+</body>
+</html>
