@@ -1,92 +1,142 @@
-# 📚 Book Manager API
 
-A simple full-stack CRUD application that allows users to manage a list of books using a custom-built RESTful API with a MongoDB database. The project also includes a basic HTML+CSS frontend for interaction with the API.
+# 📚 Book Management System – Full Stack CRUD App
+
+A complete full-stack **Book Manager** application that allows users to perform **Create, Read, Update, and Delete (CRUD)** operations on books using a custom-built RESTful API. Built with Node.js, Express, and MongoDB, it includes a clean HTML/CSS/JS frontend and comprehensive testing using Jest and Supertest.
 
 ---
 
 ## 🚀 Project Flow
 
-1. **User opens the frontend page** and fills in the book details (Title, Author, Genre, Year).
-2. The **frontend sends API requests** to the backend using Fetch.
-3. The **Express backend** handles the request, interacts with MongoDB, and returns the response.
-4. The user can **view all books**, **edit**, or **delete** them directly from the UI.
-5. All operations are handled through **custom API endpoints** built using Express.
+1. Users interact with the **frontend form** (add/view/edit/delete books).
+2. The frontend makes API calls to the **Express backend**.
+3. Backend performs CRUD operations using **MongoDB (via Mongoose)**.
+4. Responses are rendered in the UI and verified using **automated tests**.
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Backend**: Node.js, Express.js
-- **Database**: MongoDB (using Mongoose)
+- **Database**: MongoDB (with Mongoose ODM)
 - **Frontend**: HTML, CSS, JavaScript (Fetch API)
-- **Dev Tools**: Postman / curl for testing, GitHub for version control
+- **Testing**:
+  - Unit Tests: Jest
+  - API Tests: Supertest
+  - Integration Tests: MongoDB Memory Server
+- **Tools**: Curl, Git, GitHub
 
 ---
 
-## ⚙️ How to Run the Project
+## ⚙️ How to Run the Project Locally
 
 ### ✅ Prerequisites
 
-- [Node.js](https://nodejs.org/en/download/)
-- [MongoDB Atlas](https://www.mongodb.com/atlas/database) (or local MongoDB)
-- Git (to clone the repo)
+- Node.js & npm
+- MongoDB Atlas (or local MongoDB)
+- Git installed
 
 ### 🔧 Setup Instructions
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/book-manager-api.git
-   cd book-manager-api
+   git clone https://github.com/monasri001/book-management-system-CRUD-.git
+   cd book-management-system-CRUD-
+   ```
+
 2. **Install backend dependencies**
-    ```bash
-    cd server
-    npm install
-    Configure Environment Variables
+   ```bash
+   cd server
+   npm install
+   ```
 
-3. **Create a .env file in the server directory**
-    ```Add your MongoDB URI and PORT:
-    .env
-    MONGO_URI=your_mongodb_connection_string
-    PORT=5000
-    
+3. **Configure environment variables**
+
+   Create a `.env` file in the `server/` folder and add:
+   ```env
+   MONGO_URI=your_mongodb_connection_string
+   PORT=5000
+   ```
+
 4. **Start the backend server**
-    ``` bash
-    node server.js
-    
-4. **Open the frontend**
-Go to frontend/index.html
-Open it in your browser directly (double-click or use VSCode Live Server)
+   ```bash
+   node server.js
+   ```
 
-## **🖥️ Frontend Usage**
-Go to the frontend folder.
+5. **Open the frontend**
 
-Open index.html in your browser.
+   - Go to the `frontend/` folder
+   - Open `index.html` in your browser (or use VSCode Live Server)
 
-The page allows you to:
+---
 
-- Add a new book
+## 🧪 Running Tests
 
+### ▶️ Run all tests with coverage:
+```bash
+npm test
+```
+
+### 🔬 Test Types Implemented
+
+| Test Type       | Tool Used           | Description                                  |
+|------------------|---------------------|----------------------------------------------|
+| Unit Test        | Jest                | Book model unit test                         |
+| API Test         | Jest + Supertest    | CRUD operations via real endpoints           |
+| Integration Test | MongoMemoryServer   | In-memory MongoDB testing without affecting real DB |
+
+### 🧾 Test Coverage Achieved
+
+- ✅ Total coverage: ~83%
+- ✅ 100% coverage for Book model
+- ✅ All major routes tested
+
+> 📸 **Test Result Screenshot:**
+![Test Output](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/testing%20output.png)
+
+---
+
+## 🖼️ Frontend Output
+
+![Frontend UI](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/frontend%20output.png)
+
+---
+
+## 💻 Features
+
+- Add new books
 - View all books
+- Edit book information
+- Delete any book
+- Real-time updates in frontend
+- API tested using Jest + Supertest
 
-- Edit book details
+---
 
-- Delete a book
+## 💡 What You'll Learn
 
-All actions interact with the backend through your custom API!
+- Building custom REST APIs from scratch
+- Connecting Express.js with MongoDB using Mongoose
+- Handling frontend-backend communication using Fetch API
+- Structuring tests for unit, API, and integration levels
+- Calculating test coverage using Jest
 
-💡 What You’ll Learn from This Project
-How to build custom REST APIs from scratch
+---
 
-How to connect Express.js with MongoDB using Mongoose
+## 🔗 Repository Link
 
-How to make API calls from the frontend using JavaScript Fetch
+📂 GitHub Repo: [monasri001/book-management-system-CRUD-](https://github.com/monasri001/book-management-system-CRUD-)
 
-Basic UI building with HTML and CSS
+---
 
-API testing using curl and Postman
+## 🧵 Sample Social Post
 
-🧵 Example Social Media Post
-🚀 Just built my own CRUD API server with Node.js and MongoDB!
-📚 Book Manager lets you create, update, delete, and view books via a custom API.
-💻 Bonus: I built a clean frontend in HTML/CSS/JS to interact with it.
-#BuildInPublic #WebDev #MongoDB #NodeJS #CRUD #API
+> 🚀 Just built a complete Book Management CRUD App using Node.js + MongoDB!  
+> ✅ REST API + Frontend + Testing with Jest & Supertest  
+> 💡 Learned how to test APIs and improve backend reliability!  
+> #OpenSource #CRUD #NodeJS #MongoDB #BuildInPublic #API
+
+---
+
+## 🙌 Thanks for Checking It Out!
+
+Have suggestions or want to contribute? Fork the repo and create a pull request!
