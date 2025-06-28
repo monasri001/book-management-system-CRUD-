@@ -1,0 +1,44 @@
+name: Keploy API Testing with MongoDB
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  keploy-test:
+    runs-on: ubuntu-latest
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Install dependencies
+        run: |
+          cd server
+          npm install
+
+      - name: 📄 Create .env file
+        run: |
+          echo "PORT=8080" >> server/.env
+          echo "MONGO_URI=mongodb://localhost:27017/test" >> server/.env
+
+      - name: 🧪 Install Keploy CLI
+        run: |
+          curl -s https://raw.githubusercontent.com/keploy/keploy/main/install.sh | bash
+
+      - name: 📋 Run Keploy Tests
+        run: |
+          cd server
+          keploy test --command "node server.js"
