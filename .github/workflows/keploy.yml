@@ -26,15 +26,19 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
+        working-directory: ./server
         run: npm install
 
       - name: Start Server
-        run: |
-          nohup npm start & sleep 10
+        working-directory: ./server
+        run: nohup npm start & sleep 10
 
       - name: Install Keploy CLI
         run: curl --silent -L https://keploy.io/ent/install.sh | bash
 
       - name: Run Keploy Tests
+        working-directory: ./server
         run: |
-          export KEPLOY_API_KEY=8+S7+Na7096XO+8UGw== && keploy test-suite --app=00a2539a-bef0-48fa-ba54-66855e176193 --base-path http://localhost:5000/api/books --cloud
+          export KEPLOY_API_KEY=8+S7+Na7096XO+8UGw==
+          export PATH=$HOME/.keploy/bin:$PATH
+          keploy test-suite --app=00a2539a-bef0-48fa-ba54-66855e176193 --base-path http://localhost:5000/api/books --cloud
