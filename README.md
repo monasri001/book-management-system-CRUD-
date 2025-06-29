@@ -118,6 +118,11 @@ npm test
 |----------------|-------------------|--------------|
 | ![OpenAPI Schema](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/openapi%20schema.png) | ![Test Suite](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/test%20suite%20native.png) | ![Test Result](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/test.png) |
 
+> 🛠️ GitHub Actions CI/CD pipeline has been configured under `.github/workflows/ci.yml`.
+| github action status |
+|----------------------|
+| ![actions ci/cd](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/action%20status.png)|
+
 ---
 
 ## 💻 Features
