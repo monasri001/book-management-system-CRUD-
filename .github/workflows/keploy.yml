@@ -29,9 +29,27 @@ jobs:
         working-directory: ./server
         run: npm install
 
-      - name: Start Server
+      - name: Create .env from GitHub Secrets
         working-directory: ./server
-        run: nohup npm start & sleep 10
+        run: |
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+
+      - name: Start Server in Background
+        working-directory: ./server
+        run: nohup npm start > server.log 2>&1 &
+
+      - name: Wait for Server to be Ready
+        run: |
+          echo "Waiting for server to start..."
+          for i in {1..15}; do
+            if curl -s http://localhost:5000/api/books; then
+              echo "✅ Server is up!"
+              break
+            fi
+            echo "⏳ Retrying in 2 seconds..."
+            sleep 2
+          done
 
       - name: Install Keploy CLI
         run: curl --silent -L https://keploy.io/ent/install.sh | bash
@@ -41,4 +59,4 @@ jobs:
         run: |
           export KEPLOY_API_KEY=8+S7+Na7096XO+8UGw==
           export PATH=$HOME/.keploy/bin:$PATH
-          keploy test-suite --app=00a2539a-bef0-48fa-ba54-66855e176193 --base-path http://localhost:5000/api/books --cloud
+          keploy test-suite --app=00a2539a-bef0-48fa-ba54-66855e176193 --base-path=http://localhost:5000/api/books --cloud
