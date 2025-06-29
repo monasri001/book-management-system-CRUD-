@@ -3,10 +3,12 @@ info:
   title: Book Management API
   version: 1.0.0
   description: A simple CRUD API for managing books
+
 servers:
   - url: http://localhost:5000/api
+
 paths:
-  /books:
+  /api/books:
     post:
       summary: Create a new book
       requestBody:
@@ -14,16 +16,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref: '#/components/schemas/BookInput'
       responses:
         '201':
-          description: Book created
+          description: Book created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book'
     get:
-      summary: Get all books
+      summary: Retrieve all books
       responses:
         '200':
           description: A list of books
@@ -48,10 +50,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref: '#/components/schemas/BookInput'
       responses:
         '200':
-          description: Book updated
+          description: Book updated successfully
           content:
             application/json:
               schema:
@@ -65,26 +67,35 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: Book deleted
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
+        '204':
+          description: Book deleted successfully
 
 components:
   schemas:
-    Book:
+    BookInput:
       type: object
+      required:
+        - title
+        - author
       properties:
-        _id:
-          type: string
         title:
           type: string
+          example: "Atomic Habits"
         author:
           type: string
-        year:
+          example: "James Clear"
+        genre:
+          type: string
+          example: "Self-help"
+        publishedYear:
           type: integer
+          example: 2018
+
+    Book:
+      allOf:
+        - $ref: '#/components/schemas/BookInput'
+        - type: object
+          properties:
+            _id:
+              type: string
+              example: "64b5fc92cfb3b251d6f3e317"

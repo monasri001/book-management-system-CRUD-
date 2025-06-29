@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">47.05% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>8/17</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">47.05% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>8/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -99,27 +99,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -128,28 +128,28 @@ const router = express.Router();
 const Book = require('../models/Book');
 &nbsp;
 // Create a new book
-router.post('/', async (req, res) =&gt; {
-  const newBook = new Book(req.body);
-  await newBook.save();
-  res.status(201).send(newBook);
+router.post('/', <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+  const newBook = <span class="cstat-no" title="statement not covered" >new Book(req.body);</span>
+<span class="cstat-no" title="statement not covered" >  await newBook.save();</span>
+<span class="cstat-no" title="statement not covered" >  res.status(201).send(newBook);</span>
 });
 &nbsp;
 // Get all books
-router.get('/', async (req, res) =&gt; {
-  const books = await Book.find();
-  res.json(books);
+router.get('/', <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+  const books = <span class="cstat-no" title="statement not covered" >await Book.find();</span>
+<span class="cstat-no" title="statement not covered" >  res.json(books);</span>
 });
 &nbsp;
 // Update a book
-router.put('/:id', async (req, res) =&gt; {
-  const book = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(book);
+router.put('/:id', <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+  const book = <span class="cstat-no" title="statement not covered" >await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });</span>
+<span class="cstat-no" title="statement not covered" >  res.json(book);</span>
 });
 &nbsp;
 // Delete a book
-router.delete('/:id', async (req, res) =&gt; {
-  await Book.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Book deleted successfully' });
+router.delete('/:id', <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >  await Book.findByIdAndDelete(req.params.id);</span>
+<span class="cstat-no" title="statement not covered" >  res.json({ message: 'Book deleted successfully' });</span>
 });
 &nbsp;
 module.exports = router;
@@ -160,7 +160,7 @@ module.exports = router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-23T13:31:02.929Z
+                at 2025-06-28T09:30:15.910Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

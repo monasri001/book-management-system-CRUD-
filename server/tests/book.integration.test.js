@@ -1,32 +1,19 @@
-// tests/book.integration.test.js
-
+const request = require('supertest');
+const app = require('../server/server');
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-const Book = require('../models/Book');
-
-let mongoServer;
+const Book = require('../server/models/book');
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  await mongoose.connect(mongoServer.getUri());
+  await mongoose.connect(process.env.MONGO_URI);
 });
-
 afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
+  await mongoose.connection.close();
 });
 
-describe('Integration Test: MongoDB', () => {
-  it('should save a book in-memory', async () => {
-    const book = await Book.create({
-      title: 'Memory Book',
-      author: 'Memory Author',
-      genre: 'Memoir',
-      publishedYear: 2024
-    });
-
-    const found = await Book.find({});
-    expect(found.length).toBe(1);
-    expect(found[0].title).toBe('Memory Book');
+describe('GET /api/books', () => {
+  it('should return all books', async () => {
+    const res = await request(app).get('/api/books');
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
   });
 });

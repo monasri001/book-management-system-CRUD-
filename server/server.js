@@ -4,44 +4,43 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
-const bookRoutes = require('./routes/bookRoutes');
+const YAML = require('yamljs');
+const swaggerUi = require('swagger-ui-express');
+const bookRoutes = require('./routes/bookroutes');
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// === Root Route for Health Check ===
+// Serve frontend from ../frontend/index.html
+app.use(express.static(path.join(__dirname, '../frontend')));
 app.get('/', (req, res) => {
-  res.send('📘 Welcome to the Book Management API. Use /api/books for API routes.');
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-// === Optional: Serve Frontend Files ===
-// Uncomment this if you want to serve index.html from frontend folder
-// app.use(express.static(path.join(__dirname, '../frontend')));
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../frontend/index.html'));
-// });
-
-// === Optional: Swagger UI Setup ===
-// Uncomment after placing openapi.yaml at root level
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load(path.join(__dirname, '../openapi.yaml'));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// Routes
-app.use('/api/books', bookRoutes);
-
-// Export the app for testing
-module.exports = app;
-
-// Start server only if not in test mode
-if (require.main === module) {
-  mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-      app.listen(process.env.PORT, () => {
-        console.log(`🚀 Server running at http://localhost:${process.env.PORT}`);
-      });
-    })
-    .catch((err) => console.log('❌ MongoDB Connection Error:', err));
+// Swagger API Docs
+const swaggerPath = path.join(__dirname, './openapi.yaml');
+try {
+  const swaggerDocument = YAML.load(swaggerPath);
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  console.log('✅ Swagger UI available at /api-docs');
+} catch (err) {
+  console.warn('⚠️ openapi.yaml not found or invalid. Swagger UI disabled.');
 }
+
+// API Routes
+app.use('/books', (req, res) => {
+  res.redirect('/api/books');
+});
+
+// app.use('/api/books', bookRoutes);
+
+// Connect MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+  })
+  .catch(err => console.error('❌ MongoDB connection error:', err));

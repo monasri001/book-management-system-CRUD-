@@ -1,4 +1,4 @@
-name: Keploy API Testing with MongoDB
+name: Keploy API Testing
 
 on:
   push:
@@ -9,36 +9,32 @@ on:
 jobs:
   keploy-test:
     runs-on: ubuntu-latest
+
     services:
       mongo:
-        image: mongo:latest
+        image: mongo:4.4
         ports:
           - 27017:27017
 
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 🟢 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
-      - name: 📦 Install dependencies
-        run: |
-          cd server
-          npm install
+      - name: Install Dependencies
+        run: npm install
 
-      - name: 📄 Create .env file
+      - name: Start Server
         run: |
-          echo "PORT=8080" >> server/.env
-          echo "MONGO_URI=mongodb://localhost:27017/test" >> server/.env
+          nohup npm start & sleep 10
 
-      - name: 🧪 Install Keploy CLI
-        run: |
-          curl -s https://raw.githubusercontent.com/keploy/keploy/main/install.sh | bash
+      - name: Install Keploy CLI
+        run: curl --silent -L https://keploy.io/ent/install.sh | bash
 
-      - name: 📋 Run Keploy Tests
+      - name: Run Keploy Tests
         run: |
-          cd server
-          keploy test --command "node server.js"
+          export KEPLOY_API_KEY=8+S7+Na7096XO+8UGw== && keploy test-suite --app=00a2539a-bef0-48fa-ba54-66855e176193 --base-path http://localhost:5000/api/books --cloud
