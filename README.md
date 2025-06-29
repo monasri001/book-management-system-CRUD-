@@ -10,7 +10,8 @@ A complete full-stack **Book Manager** application that allows users to perform 
 1. Users interact with the **frontend form** (add/view/edit/delete books).
 2. The frontend makes API calls to the **Express backend**.
 3. Backend performs CRUD operations using **MongoDB (via Mongoose)**.
-4. Responses are rendered in the UI and verified using **automated tests**.
+4. Manual testing of unit, API, Integration
+5. Responses are rendered in the UI and verified using **automated tests**.
 
 ---
 
@@ -23,7 +24,8 @@ A complete full-stack **Book Manager** application that allows users to perform 
   - Unit Tests: Jest
   - API Tests: Supertest
   - Integration Tests: MongoDB Memory Server
-- **Tools**: Curl, Git, GitHub
+  - AI-based API Testing: Keploy
+- **Tools**: Curl, Git, GitHub, , Keploy Chrome Extension
 
 ---
 
@@ -100,6 +102,21 @@ npm test
 ![Frontend UI](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/frontend%20output.png)
 
 ---
+## Keploy API Testing & CI/CD Integration
+- API Testing with AI and CI/CD was integrated into this project.
+
+  **steps**
+  -  Generated **OpenAPI Schema** using Swagger UI
+  -  Used **Keploy Test Recorder Chrome Extension** to capture API calls
+  - Generated **test cases** and **test suite natively**
+  - Integrated Keploy into **CI/CD pipeline using GitHub Actions**
+  - Verified **successful execution** of pipeline stages
+
+  ### 📸 Screenshots:
+
+| OpenAPI Schema | Native Test Suite | Test Results |
+|----------------|-------------------|--------------|
+| ![OpenAPI Schema](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/openapi%20schema.png) | ![Test Suite](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/test%20suite%20native.png) | ![Test Result](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/test.png) |
 
 ## 💻 Features
 
@@ -109,6 +126,7 @@ npm test
 - Delete any book
 - Real-time updates in frontend
 - API tested using Jest + Supertest
+- Keploy AI-based testing and CI/CD integration
 
 ---
 
@@ -119,6 +137,8 @@ npm test
 - Handling frontend-backend communication using Fetch API
 - Structuring tests for unit, API, and integration levels
 - Calculating test coverage using Jest
+- Recording real API calls and generating test suites via Keploy
+- Setting up GitHub Actions for CI/CD with Keploy integration
 
 ---
 
