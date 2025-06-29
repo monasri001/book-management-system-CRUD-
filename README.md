@@ -118,6 +118,8 @@ npm test
 |----------------|-------------------|--------------|
 | ![OpenAPI Schema](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/openapi%20schema.png) | ![Test Suite](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/test%20suite%20native.png) | ![Test Result](https://github.com/monasri001/book-management-system-CRUD-/blob/main/assets/test.png) |
 
+---
+
 ## 💻 Features
 
 - Add new books
